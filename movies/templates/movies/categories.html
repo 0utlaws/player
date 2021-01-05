@@ -1,0 +1,40 @@
+{% extends 'movies/base.html' %}
+
+{% block title %} Movie categories {% endblock %}
+
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Movie categories</h5>
+        <table class="table table-dark table-hover table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Movies</th>
+                <th class="text-right">ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td>{{ category.movies_amount }}</td>
+                <td class="text-right">
+                    <a class="btn btn-info" href="{% url 'movies:category-videos' category.pk %}">SHOW</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center bg-warning">No categories</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

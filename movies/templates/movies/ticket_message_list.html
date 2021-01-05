@@ -1,0 +1,31 @@
+{% extends 'movies/base.html' %}
+
+{% block title %} My TicketMessages {% endblock %}
+
+
+{% block content %}
+
+{% for message in ticket_messages %}
+<br>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ message.creator }}</h5>
+    <p class="card-text">
+      {{ message.content }}
+    </p>
+    <p class="card-text">{{ message.created_at }}</p>
+  </div>
+</div>
+<br>
+{% endfor %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form }}
+    </div>
+    <div class="text-right">
+        <button class="btn btn-outline-primary" type="submit">Submit Message</button>
+    </div>
+</form>
+{% endblock %}

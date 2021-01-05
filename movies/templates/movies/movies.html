@@ -1,0 +1,59 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Movies {% endblock %}
+
+
+{% block content %}
+
+<div class="alert text-center" role="alert"></div>
+
+<form method="GET">
+    {% for field in filter.form %}
+    <div class="form-group">
+        {{ field.label_tag }}
+        {% render_field field class="form-control" %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-outline-primary">SEARCH</button>
+</form>
+
+
+<div class="mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Movie categories</h5>
+            <table class="table table-dark table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actors</th>
+                    <th class="text-right">ACTIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for movie in filter.qs %}
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.description }}</td>
+                    <td>{{ movie.show_actors }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-success" data-moviepk="{{ movie.pk }}" data-validate-access-url="{% url 'movies:validate-access' %}" data-href="{% url 'movies:video' movie.pk %}">WATCH</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center bg-warning">No movies</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+{% endblock %}

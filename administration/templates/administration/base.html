@@ -1,0 +1,99 @@
+{% load static %}
+
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+</head>
+<body>
+
+<div class="sidebar-container">
+    <div class="sidebar-logo">
+        ADMINISTRATION
+    </div>
+    <ul class="sidebar-navigation">
+        <li class="header">MODELS</li>
+        <li>
+            <a href="{% url 'administration:actor-list' %}">Actors</a>
+        </li>
+        <li>
+            <a href="{% url 'administration:category-list' %}">Categories</a>
+        </li>
+        <li>
+            <a href="{% url 'administration:movie-list' %}">Movies</a>
+        </li>
+        <li>
+            <a href="{% url 'administration:access-list' %}">Accesses</a>
+        </li>
+        <li class="header">AUTHENTICATION AND AUTHORIZATION</li>
+        <li>
+            <a href="{% url 'administration:user-list' %}">Users</a>
+        </li>
+        <li>
+            <a href="{% url 'administration:ticket-list' %}">Tickets
+                <strong style="color: red;">
+                    ({{ tickets_amount }})
+                </strong>
+            </a>
+        </li>
+        <li class="header">DASHBOARD</li>
+        <li>
+            <a href="{% url 'movies:categories' %}">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-camera-reels-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M0 8a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8z"/>
+                    <circle cx="3" cy="3" r="3"/>
+                    <circle cx="9" cy="3" r="3"/>
+                </svg>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="content-container">
+    <div class="container-fluid">
+        <div class="jumbotron">
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if filterset %}
+            <form method="GET">
+                {% for field in filterset.form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {% render_field field class="form-control" %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">SEARCH</button>
+            </form>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.js"></script>
+
+</body>
+</html>

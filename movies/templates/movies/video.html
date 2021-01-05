@@ -1,0 +1,16 @@
+{% extends 'movies/base.html' %}
+
+
+{% block content %}
+    <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup="{}">
+        <source src="/media/{{ movie.file }}" type="video/mp4"/>
+    </video>
+{% endblock %}
+
+
+
+
+
+
+
+

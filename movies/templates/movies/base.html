@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    {% block extrastyle %} {% endblock %}
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-sm bg-dark">
+
+    <ul class="navbar-nav ml-auto">
+        {% if request.user.is_authenticated %}
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'movies:categories' %}">
+                CATEGORIES
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:logout' %}">
+                LOGOUT
+            </a>
+        </li>
+        {% if request.user.is_staff %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'administration:actor-list' %}">
+                ADMIN PANEL
+            </a>
+        </li>
+        {% else %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                ADMINISTRATION
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'movies:add-ticket' %}">NEW REPORT</a>
+                <a class="dropdown-item" href="{% url 'movies:tickets' %}">MY REPORTS</a>
+            </div>
+        </li>
+        {% endif %}
+
+        {% else %}
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:sign-in' %}">
+                SIGN IN
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:sign-up' %}">
+                SIGN UP
+            </a>
+        </li>
+
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="content-container">
+    <div class="container-fluid">
+        <div class="jumbotron">
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+</div>
+
+<script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

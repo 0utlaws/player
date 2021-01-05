@@ -1,0 +1,58 @@
+{% extends 'administration/base.html' %}
+
+{% block title %} Actor List {% endblock %}
+
+{% block content %}
+
+
+<div class="header mt-5 mb-5">
+    <a class="btn btn-success" href="{% url 'administration:add-actor' %}">Add Actor</a>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Actors</h5>
+        <table class="table table-bordered" id="myTable">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Birth place</th>
+                <th scope="col">Pictures</th>
+                <th scope="col">ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(e) {
+
+     $('#myTable').dataTable({
+        "lengthMenu": [[5, 10, 20,], [5, 10, 20]],
+         "serverSide": true,
+         "ajax": {
+             "url": "{% url 'administration:actors-data' %}",
+             "type": "POST",
+             "data": {
+                 "csrfmiddlewaretoken": '{{ csrf_token }}'
+             }
+         }
+     });
+     $(document).on('click', '.btn-info', function(e) {
+        const pk = $(e.target).attr('data-pk')
+        window.location.href = `/administration/actors/${pk}/update/`
+     })
+
+     $(document).on('click', '.btn-danger', function(e) {
+        const pk = $(e.target).attr('data-pk')
+        window.location.href = `/administration/actors/${pk}/delete/`
+     })
+ });
+
+ </script>
+
+
+{% endblock %}
