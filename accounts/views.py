@@ -110,7 +110,7 @@ class PasswordResetView(View):
                 email = render_to_string(email_template_name, content)
                 try:
                     send_mail(subject, email, 'admin@example.com', [user[0].email], fail_silently=False)
-                    return redirect('password_reset_done')
+                    return redirect('accounts:password_reset_done')
                 except BadHeaderError:
                     messages.add_message(request, messages.WARNING, 'Invalid header found!')
                     return redirect('accounts:password_reset')

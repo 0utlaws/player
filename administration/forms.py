@@ -39,3 +39,15 @@ class TicketMessageForm(forms.ModelForm):
     class Meta:
         model = TicketMessage
         fields = ['content']
+
+
+class SingleEmailForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.exclude(is_staff=True))
+    subject = forms.CharField(max_length=256)
+    message = forms.CharField(widget=forms.Textarea())
+
+
+class MultipleEmailForm(forms.Form):
+    user = forms.ModelMultipleChoiceField(queryset=User.objects.exclude(is_staff=True))
+    subject = forms.CharField(max_length=256)
+    message = forms.CharField(widget=forms.Textarea())

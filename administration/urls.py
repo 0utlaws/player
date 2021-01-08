@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import actor_views, category_views, movie_views, access_views, user_views, support_views
+from .views import actor_views, category_views, movie_views, access_views, user_views, support_views, email_views
 
 app_name = 'administration'
 
@@ -34,6 +34,8 @@ urlpatterns = [
 
     path('tickets/', support_views.TicketListView.as_view(), name='ticket-list'),
     path('tickets/<int:pk>/update/', support_views.TicketUpdateView.as_view(), name='update-ticket'),
+    path('ticket/<int:pk>/messages/', support_views.TicketMessageListAndCreateView.as_view(), name='ticket-messages'),
 
-    path('ticket/<int:pk>/messages/', support_views.TicketMessageListAndCreateView.as_view(), name='ticket-messages')
+    path('send/single/email/', email_views.SingleSendEmailView.as_view(), name='single-email'),
+    path('send/multiple/email/', email_views.MultipleSendEmailView.as_view(), name='multiple-email')
 ]

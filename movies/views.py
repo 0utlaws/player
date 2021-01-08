@@ -88,4 +88,3 @@ class TicketMessageListView(View):
             messages.add_message(request, messages.SUCCESS, 'Message sent!')
             return redirect('movies:ticket-messages', pk=pk)
         return redirect('movies:ticket-messages', pk=pk)
-
